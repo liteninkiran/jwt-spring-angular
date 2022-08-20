@@ -1,5 +1,7 @@
 package com.supportportal.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,25 +11,27 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
     private String userId;
     private String firstName;
     private String lastName;
     private String username;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
     private String profileImageUrl;
     private Date lastLoginDate;
     private Date lastLoginDateDisplay;
     private Date joinDate;
-    private String[] roles; //ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
+    private String role; //ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
     private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked;
 
-    public User() {}
+    public User(){}
 
-    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String[] roles, String[] authorities, boolean isActive, boolean isNotLocked) {
+    public User(Long id, String userId, String firstName, String lastName, String username, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String role, String[] authorities, boolean isActive, boolean isNotLocked) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
@@ -39,7 +43,7 @@ public class User implements Serializable {
         this.lastLoginDate = lastLoginDate;
         this.lastLoginDateDisplay = lastLoginDateDisplay;
         this.joinDate = joinDate;
-        this.roles = roles;
+        this.role = role;
         this.authorities = authorities;
         this.isActive = isActive;
         this.isNotLocked = isNotLocked;
@@ -133,12 +137,12 @@ public class User implements Serializable {
         this.joinDate = joinDate;
     }
 
-    public String[] getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(String[] roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String[] getAuthorities() {

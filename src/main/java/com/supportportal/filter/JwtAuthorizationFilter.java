@@ -1,6 +1,6 @@
 package com.supportportal.filter;
 
-import com.supportportal.utility.JwtTokenProvider;
+import com.supportportal.utility.JWTTokenProvider;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.OK;
@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.OK;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -19,10 +20,11 @@ import java.util.List;
 
 import static com.supportportal.constant.SecurityConstant.*;
 
-public class JwtAuthorisationFilter extends OncePerRequestFilter {
-    private final JwtTokenProvider jwtTokenProvider;
+@Component
+public class JwtAuthorizationFilter extends OncePerRequestFilter {
+    private JWTTokenProvider jwtTokenProvider;
 
-    public JwtAuthorisationFilter(JwtTokenProvider jwtTokenProvider) {
+    public JwtAuthorizationFilter(JWTTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 

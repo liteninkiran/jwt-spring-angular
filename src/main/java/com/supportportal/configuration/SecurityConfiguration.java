@@ -2,7 +2,7 @@ package com.supportportal.configuration;
 
 import com.supportportal.filter.JwtAccessDeniedHandler;
 import com.supportportal.filter.JwtAuthenticationEntryPoint;
-import com.supportportal.filter.JwtAuthorisationFilter;
+import com.supportportal.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -25,19 +25,19 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private JwtAuthorisationFilter jwtAuthorisationFilter;
+    private JwtAuthorizationFilter jwtAuthorizationFilter;
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public SecurityConfiguration(JwtAuthorisationFilter jwtAuthorisationFilter,
+    public SecurityConfiguration(JwtAuthorizationFilter jwtAuthorizationFilter,
                                  JwtAccessDeniedHandler jwtAccessDeniedHandler,
                                  JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
                                  @Qualifier("userDetailsService")UserDetailsService userDetailsService,
                                  BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.jwtAuthorisationFilter = jwtAuthorisationFilter;
+        this.jwtAuthorizationFilter = jwtAuthorizationFilter;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.userDetailsService = userDetailsService;
@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
-                .addFilterBefore(jwtAuthorisationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
