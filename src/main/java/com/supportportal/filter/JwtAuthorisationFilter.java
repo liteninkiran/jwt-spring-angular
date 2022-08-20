@@ -20,7 +20,7 @@ import java.util.List;
 import static com.supportportal.constant.SecurityConstant.*;
 
 public class JwtAuthorisationFilter extends OncePerRequestFilter {
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public JwtAuthorisationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
